@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <string.h>
+#include <locale.h>
+
+#define MAX_FILMS 10
+#define MAX_GENRES 10
+
+typedef struct {
+    char title[100];
+    char genre[50];
+    int year;
+    float rating;
+    int duration;
+    float ticket_price;
+    int available_seats;
+} Film;
+
+Film films[MAX_FILMS] = {
+    {"Шоу Трумена", "Drama", 1998, 8.2, 103, 100, 100},
+    {"Темний лицар", "Action", 2008, 9, 152, 120, 120},
+    {"Вартовi галактики 3", "Sci-Fi", 2023, 8.2, 153, 180, 80}
+};
+
+int num_films = MAX_FILMS;
+
+void print_menu() {
+    printf("\n----- КIНОТЕАТР -----\n");
+    printf("1. Переглянути фiльми\n");
+    printf("2. Пошук за жанром\n");
+    printf("3. Купити квиток\n");
+    printf("4. Вихiд\n");
+    printf("-----------------------\n");
+    printf("Виберiть опцiю: ");
+}
+
+void print_all_films() {
+    printf("\n--- ФIЛЬМИ ---\n");
+    for (int i = 0; i < num_films; i++) {
+        printf("%d. %s (%s) - Рiк: %d, Рейтинг IMDb: %.1f, Тривалiсть: %d хв. Цiна квитка: %.2f грн. Мiсць залишилось: %d\n",
+               i + 1, films[i].title, films[i].genre, films[i].year, films[i].rating,
+               films[i].duration, films[i].ticket_price, films[i].available_seats);
+    }
+}
+
+void search_by_genre() {
+    char search_genre[50];
+    printf("Введiть жанр для пошуку: ");
+    scanf("%s", search_genre);
+
+    printf("\n--- РЕЗУЛЬТАТИ ПОШУКУ ---\n");
+    int found = 0;
+    for (int i = 0; i < num_films; i++) {
+        if (strcmp(films[i].genre, search_genre) == 0) {
+            printf("%d. %s (%s) - Рiк: %d, Рейтинг: %.1f, Тривалiсть: %d хв. Цiна квитка: %.2f грн. Мiсць залишилось: %d\n",
+                   i + 1, films[i].title, films[i].genre, films[i].year, films[i].rating,
+                   films[i].duration, films[i].ticket_price, films[i].available_seats);
+            found = 1;
+        }
+    }
+    if (!found) {
+        printf("Фiльми з жанром '%s' не знайдено.\n", search_genre);
+    }
+}
+
+void buy_ticket() {
+    int film_choice;
+    int num_tickets;
+
+    printf("\nВиберiть фiльм для купiвлi квитка: ");
+    scanf("%d", &film_choice);
+
+    if (film_choice < 1 || film_choice > num_films) {
+        printf("Некоректний вибiр фiльму.\n");
+        return;
+    }
+
+    Film *selected_film = &films[film_choice - 1];
+
+    printf("Ви обрали фiльм: %s (%s) - Рiк: %d, Рейтинг: %.1f, Тривалiсть: %d хв. Цiна квитка: %.2f грн\n",
+           selected_film->title, selected_film->genre, selected_film->year, selected_film->rating,
+           selected_film->duration, selected_film->ticket_price);
+
+    printf("Доступнi мiсця: %d\n", selected_film->available_seats);
+
+    printf("Введiть кiлькiсть квиткiв, яку бажаєте придбати: ");
+    scanf("%d", &num_tickets);
+
+    if (num_tickets <= 0) {
+        printf("Кiлькiсть квиткiв повинна бути бiльше 0.\n");
+        return;
+    }
+
+    if (num_tickets > selected_film->available_seats) {
+        printf("Вибачте, доступно тiльки %d мiсць.\n", selected_film->available_seats);
+        return;
+    }
+
+    float total_price = num_tickets * selected_film->ticket_price;
+    printf("Вартiсть %d квиткiв: %.2f грн\n", num_tickets, total_price);
+
+    selected_film->available_seats -= num_tickets;
+
+    printf("Успiшно придбано %d квиткiв. Дякуємо за покупку! Насолоджуйтесь фiльмом.\n", num_tickets);
+}
+
+int main() {
+    setlocale(LC_ALL, "Ukr");
+    int choice;
+    do {
+        print_menu();
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                print_all_films();
+                break;
+            case 2:
+                search_by_genre();
+                break;
+            case 3:
+                buy_ticket();
+                break;
+            case 4:
+                printf("До зустрiчi у кiнотеатрi!\n");
+                break;
+            default:
+                printf("Некоректний вибiр опцiї. Спробуйте ще раз.\n");
+                break;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
