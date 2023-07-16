@@ -2,8 +2,8 @@
 #include <string.h>
 #include <locale.h>
 
-#define MAX_FILMS 10
-#define MAX_GENRES 10
+#define MAX_FILMS 9
+#define MAX_GENRES 9
 
 typedef struct {
     char title[100];
