@@ -85,7 +85,7 @@ void view_description() {
 
     Film *selected_film = &films[film_choice - 1];
 
-    printf("Опис фільму \"%s\":\n%s\n", selected_film->title, selected_film->description);
+    printf("Опис фiльму \"%s\":\n%s\n", selected_film->title, selected_film->description);
 }
 
 void buy_ticket() {
