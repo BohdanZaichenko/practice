@@ -2,7 +2,7 @@
 #include <string.h>
 #include <locale.h>
 
-#define MAX_FILMS 7
+#define MAX_FILMS 10
 #define MAX_GENRES 7
 
 typedef struct {
@@ -23,7 +23,10 @@ Film films[MAX_FILMS] = {
     {"Флеш", "Sci-Fi", 2023, 7.1, 143, 180, 90},
     {"Мiсто астероїдiв", "Comedy", 2023, 7, 106, 180, 100},
     {"Втеча з Шоушенка", "Drama", 1994, 9.3, 142, 100, 80},
-    {"Коко", "Adventure", 2017, 8.4, 105, 100, 80}
+    {"Коко", "Adventure", 2017, 8.4, 105, 100, 80},
+    {"Інтерстеллар", "Sci-Fi", 2014, 8.6, 169, 150, 150},
+    {"Суспiрiя", "Horror", 1977, 7.4, 98, 80, 50},
+    {"Зелена миля", "Drama", 1999, 8.6, 189, 120, 100}
 
 };
 
